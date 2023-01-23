@@ -6,13 +6,13 @@ import cookieParser = require('cookie-parser');
 import logger = require('morgan');
 
 // routing
-let indexRouter = require('./routes/index');
+let indexRouter = require('./Routes/index');
 
 // web app instance
 let app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'Views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
