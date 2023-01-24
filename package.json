@@ -6,7 +6,7 @@
   "author": "Zivorad Trickovic",
   "license": "MIT",
   "engines": {
-    "node": "^16.0.0",
+    "node": "^19.0.0",
     "npm": "^6.1.0"
   },
   "scripts": {

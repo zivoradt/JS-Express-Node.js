@@ -6,7 +6,7 @@
 import createError = require('http-errors');
 let app = require('./app');
 const debug = require('debug')('week10b:server');
-import http = require('http');
+let http = require('http');
 
 /**
  * Get port from environment and store in Express.
