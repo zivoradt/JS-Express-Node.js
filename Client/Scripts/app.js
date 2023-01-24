@@ -86,14 +86,13 @@ var core;
             }
             contactList.innerHTML = data;
             $("button.edit").on("click", function () {
-                linkData = $(this).val().toString();
-                location.href = '/edit';
+                location.href = '/edit/' + $(this).val().toString();
             });
             $("button.delete").on("click", function () {
                 if (confirm("Are you sure?")) {
                     localStorage.removeItem($(this).val().toString());
                 }
-                location.href = '/contact-link';
+                location.href = '/contact-list';
             });
         }
         $("#addButton").on("click", function () {

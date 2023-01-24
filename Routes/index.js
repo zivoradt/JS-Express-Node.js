@@ -26,5 +26,11 @@ router.get('/login', function (req, res, next) {
 router.get('/register', function (req, res, next) {
     res.render('index', { title: 'Register', page: 'register' });
 });
+router.get('/contact-list', function (req, res, next) {
+    res.render('index', { title: 'Contact List', page: 'contact-list' });
+});
+router.get('/edit', function (req, res, next) {
+    res.render('index', { title: 'Edit', page: 'edit' });
+});
 module.exports = router;
 //# sourceMappingURL=index.js.map
