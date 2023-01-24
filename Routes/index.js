@@ -30,7 +30,11 @@ router.get('/contact-list', function (req, res, next) {
     res.render('index', { title: 'Contact List', page: 'contact-list' });
 });
 router.get('/edit', function (req, res, next) {
-    res.render('index', { title: 'Edit', page: 'edit' });
+    res.render('index', { title: 'Add', page: 'edit' });
+});
+router.get('/edit/:id', function (req, res, next) {
+    let id = req.params.id;
+    res.render('edit', { title: 'Edit', page: 'add', contactID: id });
 });
 module.exports = router;
 //# sourceMappingURL=index.js.map
