@@ -100,7 +100,7 @@ var core;
         });
     }
     function displayEdit() {
-        let key = linkData;
+        let key = $("body")[0].dataset.contentid;
         let contact = new core.Contact();
         if (key != undefined && key != "") {
             contact.deserialize(localStorage.getItem(key));
@@ -167,6 +167,10 @@ var core;
             location.href = '/login';
         }
     }
+    function performLogout() {
+        sessionStorage.clear();
+        location.href = "/login";
+    }
     function Start() {
         let pageID = $("body")[0].getAttribute("id");
         switch (pageID) {
@@ -181,6 +185,9 @@ var core;
                 break;
             case 'login':
                 displayLogin();
+                break;
+            case 'logout':
+                performLogout();
                 break;
         }
     }

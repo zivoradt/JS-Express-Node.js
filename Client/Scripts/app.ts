@@ -134,7 +134,9 @@ namespace core {
   }
 
   function displayEdit(): void {
-    let key =  linkData;
+
+    let key =  $("body")[0].dataset.contentid;
+
 
     let contact = new core.Contact();
 
@@ -244,6 +246,10 @@ namespace core {
     }
   }
 
+  function performLogout():void {
+    sessionStorage.clear();
+    location.href = "/login";
+  }
 
 
   /**
@@ -265,6 +271,9 @@ namespace core {
         break;
       case 'login':
         displayLogin();
+        break;
+      case 'logout':
+        performLogout();
         break;
     }
   }
