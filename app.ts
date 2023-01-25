@@ -4,12 +4,24 @@ import express = require('express');
 import path = require('path');
 import cookieParser = require('cookie-parser');
 import logger = require('morgan');
+import mongoose = require('mongoose');
 
 // routing
 let indexRouter = require('./Routes/index');
 
 // web app instance
 let app = express();
+
+// DB configuration
+let DBConfig = require('./Config/db');
+mongoose.connect(DBConfig.Path);
+ 
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', function(){
+  console.log(`Connected to MongoDB at:${DBConfig.Path}`);
+})
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'Views'));
