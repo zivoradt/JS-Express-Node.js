@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+exports.Model = void 0;
+const mongoose_1 = require("mongoose");
+const Schema = mongoose_1.default.Schema;
 const ContactSchema = new Schema({
     FullName: String,
     EmailAddress: String,
     ContactNumber: String
 }, {
-    collection: "contact "
+    collection: "contact"
 });
-const Model = mongoose.model("Contact", ContactSchema);
-module.exports.Model = Model;
+exports.Model = mongoose_1.default.model("Contact", ContactSchema);
 //# sourceMappingURL=contact.js.map

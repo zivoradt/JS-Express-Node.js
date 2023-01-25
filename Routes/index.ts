@@ -1,5 +1,9 @@
 import express = require('express');
-let router = express.Router();
+const router = express.Router();
+
+// Contact model
+import ContactModel = require("../Models/contact");
+const Contact = ContactModel.Model; //  Contact alias
 
 /* GET home page. */
 router.get('/', function(req, res, next) 
@@ -53,7 +57,15 @@ router.get('/register', function(req, res, next)
 
 router.get('/contact-list', function(req, res, next) 
 {
-  res.render('index', { title: 'Contact List', page: 'contact-list', user : 'admin' });
+  //res.render('index', { title: 'Contact List', page: 'contact-list', user : 'admin' });
+
+  Contact.find(function(err, contacts
+    ){
+      if (err) {
+        return console.error(err);
+      }
+      res.json(contacts);
+  });
 });
 
 router.get('/edit', function(req, res, next) 

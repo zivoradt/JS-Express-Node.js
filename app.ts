@@ -10,10 +10,10 @@ import mongoose = require('mongoose');
 let indexRouter = require('./Routes/index');
 
 // web app instance
-let app = express();
+const app = express();
 
 // DB configuration
-let DBConfig = require('./Config/db');
+import DBConfig = require('./Config/db');
 mongoose.connect(DBConfig.Path);
  
 const db = mongoose.connection;
