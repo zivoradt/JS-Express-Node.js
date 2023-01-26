@@ -1,7 +1,6 @@
 "use strict";
 var core;
 (function (core) {
-    let linkData;
     function testFullName() {
         let messageArea = $("#messageArea").hide();
         let fullNamePattern = /([A-Z][a-z]{1,25})+(\s|,|-)([A-Z][a-z]{1,25})+(\s|,|-)*/;
@@ -65,70 +64,6 @@ var core;
     }
     function displayContactList() {
         authGuard();
-        if (localStorage.length > 0) {
-            let contactList = document.getElementById("contactList");
-            let data = "";
-            let keys = Object.keys(localStorage);
-            let index = 1;
-            for (const key of keys) {
-                let contactData = localStorage.getItem(key);
-                let contact = new core.Contact();
-                contact.deserialize(contactData);
-                data += `<tr>
-          <th scope="row" class="text-center">${index}</th>
-          <td>${contact.FullName}</td>
-          <td>${contact.ContactNumber}</td>
-          <td>${contact.EmailAddress}</td>
-          <td class="text-center"><button value="${key}" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</button></td>
-          <td class="text-center"><button value="${key}" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt fa-sm"></i> Delete</button></td>
-          </tr>`;
-                index++;
-            }
-            contactList.innerHTML = data;
-            $("button.edit").on("click", function () {
-                location.href = '/edit/' + $(this).val().toString();
-            });
-            $("button.delete").on("click", function () {
-                if (confirm("Are you sure?")) {
-                    localStorage.removeItem($(this).val().toString());
-                }
-                location.href = '/contact-list';
-            });
-        }
-        $("#addButton").on("click", function () {
-            location.href = '/edit';
-        });
-    }
-    function displayEdit() {
-        let key = $("body")[0].dataset.contentid;
-        let contact = new core.Contact();
-        if (key != undefined && key != "") {
-            contact.deserialize(localStorage.getItem(key));
-            $("#fullName").val(contact.FullName);
-            $("#contactNumber").val(contact.ContactNumber);
-            $("#emailAddress").val(contact.EmailAddress);
-        }
-        else {
-            $("main>div>h1").text("Add Contact");
-            $("#editButton").html(`<i class="fas fa-plus-circle fa-lg"></i> Add`);
-        }
-        formValidation();
-        $("#editButton").on("click", function () {
-            if (key == "") {
-                key = contact.FullName.substring(0, 1) + Date.now();
-            }
-            contact.FullName = $("#fullName").val().toString();
-            contact.ContactNumber = $("#contactNumber").val().toString();
-            contact.EmailAddress = $("#emailAddress").val().toString();
-            if (contact.serialize()) {
-                localStorage.setItem(key, contact.serialize());
-            }
-            linkData = "";
-            location.href = '/contact-list';
-        });
-        $("#cancelButton").on("click", function () {
-            location.href = '/contact-list';
-        });
     }
     function displayLogin() {
         let messageArea = $("#messageArea");
@@ -149,7 +84,7 @@ var core;
                 if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
-                    location.href = '/contact-list';
+                    $("form").trigger("submit");
                 }
                 else {
                     username.trigger("focus").trigger("select");
@@ -162,32 +97,40 @@ var core;
             location.href = '/home';
         });
     }
+    function performLogout() {
+        sessionStorage.clear();
+        location.href = '/login';
+    }
     function authGuard() {
         if (!sessionStorage.getItem("user")) {
             location.href = '/login';
         }
     }
-    function performLogout() {
-        sessionStorage.clear();
-        location.href = "/login";
+    function display404() {
     }
     function Start() {
         let pageID = $("body")[0].getAttribute("id");
         switch (pageID) {
+            case 'home':
+                break;
+            case 'about':
+                break;
+            case 'services':
+                break;
+            case 'projects':
+                break;
             case 'contact':
                 displayContact();
-                break;
-            case 'contact-list':
-                displayContactList();
-                break;
-            case 'edit':
-                displayEdit();
                 break;
             case 'login':
                 displayLogin();
                 break;
             case 'logout':
                 performLogout();
+            case 'register':
+                break;
+            case 'contact-list':
+                displayContactList();
                 break;
         }
     }

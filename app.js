@@ -36,11 +36,11 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const indexRouter = __importStar(require("./Routes/index"));
 exports.app = (0, express_1.default)();
 const DBConfig = __importStar(require("./Config/db"));
-mongoose_1.default.connect(DBConfig.Path);
+mongoose_1.default.connect(DBConfig.Path, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose_1.default.connection;
-db.on('error', console.error.bind(console, 'connection error'));
+db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-    console.log(`Connected to MongoDB at:${DBConfig.Path}`);
+    console.log(`Connected to MongoDB at: ${DBConfig.Path}`);
 });
 exports.app.set('views', path_1.default.join(__dirname, 'Views'));
 exports.app.set('view engine', 'ejs');
@@ -58,6 +58,6 @@ exports.app.use(function (err, req, res, next) {
     let message = err.message;
     let error = req.app.get('env') === 'development' ? err : {};
     res.status(err.status || 500);
-    res.render('error', { message: message, error: error, title: "", page: 'error' });
+    res.render('error', { message: message, error: error, title: '', page: '', displayName: '' });
 });
 //# sourceMappingURL=app.js.map

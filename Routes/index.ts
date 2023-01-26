@@ -1,83 +1,86 @@
+// Express Configuration
 import express from 'express';
 export const router = express.Router();
 
-// Contact model
+// Contact Model
 import * as ContactModel from "../Models/contact";
-const Contact = ContactModel.Model; //  Contact alias
+const Contact = ContactModel.Model; // Contact Alias
 
-/* GET home page. */
+
+/* GET home page - with / */
 router.get('/', function(req, res, next) 
 {
-  res.render('index', { title: 'Home', page: 'home', user : '' });
+  res.render('index', { title: 'Home', page: 'home', displayName: ''   });
 });
+
+/* GET home page - with /home */
 router.get('/home', function(req, res, next) 
 {
-  res.render('index', { title: 'Home', page: 'home', user : '' });
+  res.render('index', { title: 'Home', page: 'home', displayName: ''    });
 });
 
+/* GET about page - with /about */
 router.get('/about', function(req, res, next) 
 {
-  res.render('index', { title: 'About us', page: 'about', user : '' });
+  res.render('index', { title: 'About Us', page: 'about', displayName: ''    });
 });
 
-router.get('/projects', function(req, res, next) 
-{
-  res.render('index', { title: 'Projects', page: 'projects', user : ''});
-});
-
+/* GET services page - with /services */
 router.get('/services', function(req, res, next) 
 {
-  res.render('index', { title: 'Services', page: 'services', user : '' });
+  res.render('index', { title: 'Our Services', page: 'services', displayName: ''    });
 });
 
+/* GET projects page - with /projects */
+router.get('/projects', function(req, res, next) 
+{
+  res.render('index', { title: 'Our Projects', page: 'projects', displayName: ''    });
+});
+
+/* GET contact page - with /contact */
 router.get('/contact', function(req, res, next) 
 {
-  res.render('index', { title: 'Contact Us', page: 'contact', user : ''});
+  res.render('index', { title: 'Contact Us', page: 'contact', displayName: ''    });
 });
 
-// Login page
+/* GET login page - with /login */
 router.get('/login', function(req, res, next) 
 {
-  res.render('index', { title: 'Login', page: 'login', user : '' });
+  res.render('index', { title: 'Login', page: 'login', displayName: ''    });
 });
 
-// Logout page
-router.get('/logout', function(req, res, next) 
+/* GET login page - with /login */
+router.post('/login', function(req, res, next) 
 {
-  res.render('index', { title: 'Logout', page: 'logout', user : '' });
+  res.redirect('/contact-list');
 });
 
+
+/* GET register page - with /register */
 router.get('/register', function(req, res, next) 
 {
-  res.render('index', { title: 'Register', page: 'register', user : '' });
+  res.render('index', { title: 'Register', page: 'register', displayName: ''    });
 });
 
-/****************************************Testing******************************************************/
-
-
+/********************** temporary routes - mocking up login / register and contact-list related pages **********************/
+/* GET register page - with /register */
 router.get('/contact-list', function(req, res, next) 
 {
-  //res.render('index', { title: 'Contact List', page: 'contact-list', user : 'admin' });
-
-  Contact.find(function(err, contacts
-    ){
-      if (err) {
+    // db.contacts.find()
+    Contact.find(function(err, contacts){
+      if(err)
+      {
         return console.error(err);
       }
-      res.json(contacts);
-  });
+      console.log(contacts);
+      res.render('index', { title: 'Contact List', page: 'contact-list', contacts: contacts, displayName: 'temp'  });
+    });
+
 });
 
-router.get('/edit', function(req, res, next) 
+/* GET login page - with /login */
+router.get('/logout', function(req, res, next) 
 {
-  res.render('index', { title: 'Add', page: 'edit', user : 'admin' });
+  res.render('index', { title: 'Logout', page: 'logout', displayName: ''    });
 });
 
-router.get('/edit/:id', function(req, res, next) 
-{
-  let id = req.params.id;
-  res.render('edit', { title: 'Edit', page: 'edit', contactID: id, user : 'admin' });
-});
-
-
-//module.exports = router;

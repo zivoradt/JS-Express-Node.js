@@ -32,45 +32,42 @@ exports.router = express_1.default.Router();
 const ContactModel = __importStar(require("../Models/contact"));
 const Contact = ContactModel.Model;
 exports.router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Home', page: 'home', user: '' });
+    res.render('index', { title: 'Home', page: 'home', displayName: '' });
 });
 exports.router.get('/home', function (req, res, next) {
-    res.render('index', { title: 'Home', page: 'home', user: '' });
+    res.render('index', { title: 'Home', page: 'home', displayName: '' });
 });
 exports.router.get('/about', function (req, res, next) {
-    res.render('index', { title: 'About us', page: 'about', user: '' });
-});
-exports.router.get('/projects', function (req, res, next) {
-    res.render('index', { title: 'Projects', page: 'projects', user: '' });
+    res.render('index', { title: 'About Us', page: 'about', displayName: '' });
 });
 exports.router.get('/services', function (req, res, next) {
-    res.render('index', { title: 'Services', page: 'services', user: '' });
+    res.render('index', { title: 'Our Services', page: 'services', displayName: '' });
+});
+exports.router.get('/projects', function (req, res, next) {
+    res.render('index', { title: 'Our Projects', page: 'projects', displayName: '' });
 });
 exports.router.get('/contact', function (req, res, next) {
-    res.render('index', { title: 'Contact Us', page: 'contact', user: '' });
+    res.render('index', { title: 'Contact Us', page: 'contact', displayName: '' });
 });
 exports.router.get('/login', function (req, res, next) {
-    res.render('index', { title: 'Login', page: 'login', user: '' });
+    res.render('index', { title: 'Login', page: 'login', displayName: '' });
 });
-exports.router.get('/logout', function (req, res, next) {
-    res.render('index', { title: 'Logout', page: 'logout', user: '' });
+exports.router.post('/login', function (req, res, next) {
+    res.redirect('/contact-list');
 });
 exports.router.get('/register', function (req, res, next) {
-    res.render('index', { title: 'Register', page: 'register', user: '' });
+    res.render('index', { title: 'Register', page: 'register', displayName: '' });
 });
 exports.router.get('/contact-list', function (req, res, next) {
     Contact.find(function (err, contacts) {
         if (err) {
             return console.error(err);
         }
-        res.json(contacts);
+        console.log(contacts);
+        res.render('index', { title: 'Contact List', page: 'contact-list', contacts: contacts, displayName: 'temp' });
     });
 });
-exports.router.get('/edit', function (req, res, next) {
-    res.render('index', { title: 'Add', page: 'edit', user: 'admin' });
-});
-exports.router.get('/edit/:id', function (req, res, next) {
-    let id = req.params.id;
-    res.render('edit', { title: 'Edit', page: 'edit', contactID: id, user: 'admin' });
+exports.router.get('/logout', function (req, res, next) {
+    res.render('index', { title: 'Logout', page: 'logout', displayName: '' });
 });
 //# sourceMappingURL=index.js.map
