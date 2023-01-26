@@ -1,8 +1,8 @@
-import express = require('express');
-const router = express.Router();
+import express from 'express';
+export const router = express.Router();
 
 // Contact model
-import ContactModel = require("../Models/contact");
+import * as ContactModel from "../Models/contact";
 const Contact = ContactModel.Model; //  Contact alias
 
 /* GET home page. */
@@ -80,4 +80,4 @@ router.get('/edit/:id', function(req, res, next)
 });
 
 
-module.exports = router;
+//module.exports = router;
