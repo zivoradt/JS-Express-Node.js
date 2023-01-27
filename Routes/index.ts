@@ -117,6 +117,7 @@ router.post('/edit/:id', function(req, res, next)
     "ContactNumber" : req.body.ContactNumber,
     "EmailAdress" : req.body.EmailAdress
   });
+  // db.contact.update()
   Contact.updateOne({_id: id}, updateContact, {}, (err)=>{
     if (err) {
       console.error(err);
@@ -133,13 +134,25 @@ router.post('/edit/:id', function(req, res, next)
 /* Display add  page - with /add */
 router.get('/add', function(req, res, next) 
 {
-  res.render('index', { title: 'Add', page: 'edit', displayName: ''    });
+  res.render('index', { title: 'Add', page: 'edit', contact: '', displayName: ''    });
 });
 
 /* Process edit  page - with /login */
 router.post('/add', function(req, res, next) 
 {
-  res.redirect('/contact-list');
+  let newContact = new Contact({
+    "FullName" : req.body.FullName,
+    "ContactNumber" : req.body.ContactNumber,
+    "EmailAdress" : req.body.EmailAdress
+  });
+
+  Contact.create(newContact, (err)=>{
+    if (err) {
+      console.error(err);
+      res.end(err);
+    }
+    res.redirect('/contact-list');
+  })
 }); 
 
 /* Process delete  page - with /delete/:id */

@@ -101,10 +101,21 @@ exports.router.post('/edit/:id', function (req, res, next) {
     });
 });
 exports.router.get('/add', function (req, res, next) {
-    res.render('index', { title: 'Add', page: 'edit', displayName: '' });
+    res.render('index', { title: 'Add', page: 'edit', contact: '', displayName: '' });
 });
 exports.router.post('/add', function (req, res, next) {
-    res.redirect('/contact-list');
+    let newContact = new Contact({
+        "FullName": req.body.FullName,
+        "ContactNumber": req.body.ContactNumber,
+        "EmailAdress": req.body.EmailAdress
+    });
+    Contact.create(newContact, (err) => {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        }
+        res.redirect('/contact-list');
+    });
 });
 exports.router.get('/delete', function (req, res, next) {
     res.redirect('/contact-list');
