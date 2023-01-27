@@ -49,6 +49,7 @@ router.get('/login', function(req, res, next)
   res.render('index', { title: 'Login', page: 'login', displayName: ''    });
 });
 
+/**This is a temporarry routes for autentification and registration *************************************************/
 /* GET login page - with /login */
 router.post('/login', function(req, res, next) 
 {
@@ -62,8 +63,15 @@ router.get('/register', function(req, res, next)
   res.render('index', { title: 'Register', page: 'register', displayName: ''    });
 });
 
-/********************** temporary routes - mocking up login / register and contact-list related pages **********************/
-/* GET register page - with /register */
+/* GET login page - with /login */
+router.get('/logout', function(req, res, next) 
+{
+  res.render('index', { title: 'Logout', page: 'logout', displayName: ''    });
+});
+
+
+/********************** temporary routes -  contact-list related pages **********************/
+/* GET register page - with / contact-list */
 router.get('/contact-list', function(req, res, next) 
 {
     // db.contacts.find()
@@ -78,9 +86,65 @@ router.get('/contact-list', function(req, res, next)
 
 });
 
-/* GET login page - with /login */
-router.get('/logout', function(req, res, next) 
+/* Display edit  page - with /edit:id */
+router.get('/edit/:id', function(req, res, next) 
 {
-  res.render('index', { title: 'Logout', page: 'logout', displayName: ''    });
+  let id = req.params.id;
+
+  //---db.contact.find({"_id": id}) and pass it to contactToEdit-----
+  Contact.findById(id, {}, {}, (err, contactToEdit)=>{
+      if (err) {
+        console.error(err);
+        res.end(err);
+      }
+      else {
+        // show the edit view
+        
+        res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: ''});
+      }
+  } )
+
+}); 
+
+/* Process edit  page - with /edit:id */
+router.post('/edit/:id', function(req, res, next) 
+{
+  let id = req.params.id;
+
+  let updateContact = new Contact({
+    "_id": id,
+    "FullName" : req.body.FullName,
+    "ContactNumber" : req.body.ContactNumber,
+    "EmailAdress" : req.body.EmailAdress
+  });
+  Contact.updateOne({_id: id}, updateContact, {}, (err)=>{
+    if (err) {
+      console.error(err);
+      res.end(err);
+    }
+    else {
+      
+      res.redirect('/contact-list');
+    }
+  })
+
 });
 
+/* Display add  page - with /add */
+router.get('/add', function(req, res, next) 
+{
+  res.render('index', { title: 'Add', page: 'edit', displayName: ''    });
+});
+
+/* Process edit  page - with /login */
+router.post('/add', function(req, res, next) 
+{
+  res.redirect('/contact-list');
+}); 
+
+/* Process delete  page - with /delete/:id */
+router.get('/delete', function(req, res, next) 
+{
+
+  res.redirect('/contact-list');
+});
