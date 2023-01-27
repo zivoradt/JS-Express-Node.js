@@ -100,120 +100,27 @@ namespace core
       // don't allow visitors to go here
       authGuard();
 
-      /* if (localStorage.length > 0) 
-      {
 
-        let contactList = document.getElementById("contactList");
-
-        let data = "";
-
-        let keys = Object.keys(localStorage);
-         
-        let index = 1;
-
-        for (const key of keys) 
+      // Confirm deletion
+      $("a.delete").on("click", function(event){
+        if(!confirm("Are you sure?"))
         {
-          let contactData = localStorage.getItem(key);
-
-          let contact = new core.Contact();
-          contact.deserialize(contactData);
-
-          data += `<tr>
-          <th scope="row" class="text-center">${index}</th>
-          <td>${contact.FullName}</td>
-          <td>${contact.ContactNumber}</td>
-          <td>${contact.EmailAddress}</td>
-          <td class="text-center"><button value="${key}" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</button></td>
-          <td class="text-center"><button value="${key}" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt fa-sm"></i> Delete</button></td>
-          </tr>`;
-
-          index++;
+          event.preventDefault();
+          location.href = '/contact-list';
         }
+      });
 
-        contactList.innerHTML = data;
-
-        $("button.edit").on("click", function(){
-          //loadLink("edit", $(this).val().toString());
-          location.href = '/edit';
-         });
-
-         $("button.delete").on("click", function(){
-           if(confirm("Are you sure?"))
-           {
-            localStorage.removeItem($(this).val().toString());
-           }
-           //loadLink("contact-list"); 
-           // refresh the page
-           location.href = '/contact-list';
-         });
-      }
-
-      $("#addButton").on("click", function() 
-      {
-      //loadLink("edit");
-      location.href = '/edit';
-      }); */
+      
     }
 
-    /* function displayEdit(): void
+     function displayEdit(): void
     {
-      //let key = router.LinkData;
-
-      let contact = new core.Contact();
-
-      // check to ensure that the key is not empty
-      if(key != undefined && key != "")
-      {
-        // get contact info from localStorage
-        contact.deserialize(localStorage.getItem(key));
-
-        // display contact information in the form
-        $("#fullName").val(contact.FullName);
-        $("#contactNumber").val(contact.ContactNumber);
-        $("#emailAddress").val(contact.EmailAddress);
-      }
-      else
-      {
-        // modify the page so that it shows "Add Contact" in the header 
-        $("main>div>h1").text("Add Contact");
-        // modify edit button so that it shows "Add" as well as the appropriate icon
-        $("#editButton").html(`<i class="fas fa-plus-circle fa-lg"></i> Add`);
-      }
+    
 
       // form validation
       formValidation();
       
-     $("#editButton").on("click", function() 
-        {
-            // check to see if key is empty
-          if(key == "")
-          {
-            // create a new key
-            key = contact.FullName.substring(0, 1) + Date.now();
-          }
-
-          // copy contact info from form to contact object
-          contact.FullName = $("#fullName").val().toString();
-          contact.ContactNumber = $("#contactNumber").val().toString();
-          contact.EmailAddress = $("#emailAddress").val().toString();
-
-          if(contact.serialize())
-          {
-            // add the contact info to localStorage
-            localStorage.setItem(key, contact.serialize());
-          }
-
-          // return to the contact list
-          //loadLink("contact-list");
-          
-        });
-
-      $("#cancelButton").on("click", function()
-      {
-        // return to the contact list
-        //loadLink("contact-list");
-      });
-    } */
+    } 
 
     function displayLogin():void
     {
@@ -378,16 +285,11 @@ namespace core
         let pageID = $("body")[0].getAttribute("id");
         
       switch (pageID) {
-        case 'home':
-          break;
-        case 'about':
-          break;
-        case 'services':
-          break;
-        case 'projects':
-          break;
         case 'contact':
           displayContact();
+          break;
+          case 'edit':
+          displayEdit();
           break;
         case 'login':
           displayLogin();

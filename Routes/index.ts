@@ -146,6 +146,7 @@ router.post('/add', function(req, res, next)
     "EmailAdress" : req.body.EmailAdress
   });
 
+  // db.contact.insert()
   Contact.create(newContact, (err)=>{
     if (err) {
       console.error(err);
@@ -156,8 +157,17 @@ router.post('/add', function(req, res, next)
 }); 
 
 /* Process delete  page - with /delete/:id */
-router.get('/delete', function(req, res, next) 
+router.get('/delete/:id', function(req, res, next) 
 {
+  let id = req.params.id;
 
-  res.redirect('/contact-list');
+  // db.contact.remove(id)
+  Contact.remove({_id: id}, (err)=>{
+    if (err) {
+      console.error(err);
+      res.end(err);
+    }
+    res.redirect('/contact-list');
+  } )
+
 });

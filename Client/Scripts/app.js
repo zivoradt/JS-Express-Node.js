@@ -64,6 +64,15 @@ var core;
     }
     function displayContactList() {
         authGuard();
+        $("a.delete").on("click", function (event) {
+            if (!confirm("Are you sure?")) {
+                event.preventDefault();
+                location.href = '/contact-list';
+            }
+        });
+    }
+    function displayEdit() {
+        formValidation();
     }
     function displayLogin() {
         let messageArea = $("#messageArea");
@@ -111,16 +120,11 @@ var core;
     function Start() {
         let pageID = $("body")[0].getAttribute("id");
         switch (pageID) {
-            case 'home':
-                break;
-            case 'about':
-                break;
-            case 'services':
-                break;
-            case 'projects':
-                break;
             case 'contact':
                 displayContact();
+                break;
+            case 'edit':
+                displayEdit();
                 break;
             case 'login':
                 displayLogin();
