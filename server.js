@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const AppConfig = __importStar(require("./app"));
+const AppConfig = __importStar(require("./Server/Config/app"));
 const debug_1 = __importDefault(require("debug"));
 (0, debug_1.default)('week10a:server');
 const http_1 = __importDefault(require("http"));
