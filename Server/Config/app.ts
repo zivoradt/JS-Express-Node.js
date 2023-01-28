@@ -6,6 +6,15 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 
+// modules for autentification
+import session from 'express-session';
+import passport from 'passport';
+import passportLocal from 'passport-local';
+
+// autentification objects
+let localStrategy = passportLocal.Strategy;
+
+
 // App configuration
 import indexRouter from '../Routes/index';
 const app = express();
