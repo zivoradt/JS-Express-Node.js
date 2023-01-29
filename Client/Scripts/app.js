@@ -63,7 +63,6 @@ var core;
         });
     }
     function displayContactList() {
-        authGuard();
         $("a.delete").on("click", function (event) {
             if (!confirm("Are you sure?")) {
                 event.preventDefault();
@@ -76,16 +75,7 @@ var core;
     }
     function displayLogin() {
     }
-    function performLogout() {
-        sessionStorage.clear();
-        location.href = '/login';
-    }
-    function authGuard() {
-        if (!sessionStorage.getItem("user")) {
-            location.href = '/login';
-        }
-    }
-    function display404() {
+    function displayRegister() {
     }
     function Start() {
         let pageID = $("body")[0].getAttribute("id");
@@ -99,9 +89,8 @@ var core;
             case 'login':
                 displayLogin();
                 break;
-            case 'logout':
-                performLogout();
             case 'register':
+                displayRegister();
                 break;
             case 'contact-list':
                 displayContactList();
