@@ -124,8 +124,7 @@ namespace core
 
     function displayLogin():void
     {
-      let messageArea = $("#messageArea");
-      messageArea.hide();
+    /* 
 
       $("#loginButton").on("click", function() 
       {
@@ -179,7 +178,7 @@ namespace core
         // return to the home page
         //loadLink("home");
         location.href = '/home';
-      });
+      }); */
     }
 
     function performLogout():void
