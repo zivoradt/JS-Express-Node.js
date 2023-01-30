@@ -97,43 +97,32 @@ namespace core
 
     function displayContactList() :void
     {
-     
-
-
-      // Confirm deletion
+      // confirm deletion
       $("a.delete").on("click", function(event){
         if(!confirm("Are you sure?"))
         {
           event.preventDefault();
           location.href = '/contact-list';
-        }
+        }       
       });
-
-      
     }
 
-     function displayEdit(): void
+    function displayEdit(): void
     {
-    
-
       // form validation
       formValidation();
-      
-    } 
+     } 
 
     function displayLogin():void
     {
-        //TO DO validation
-    }
-
-    
-    function displayRegister():void
-    {
+      // TODO: validation
       
     }
-    
-   
-    
+
+    function displayRegister():void
+    {
+      // TODO: validation
+    }
     
 
     /**
@@ -142,26 +131,20 @@ namespace core
      */
     function Start(): void
     {
-        //loadHeader(router.ActiveLink);
-      
-        //loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
-
-        //loadFooter();
-
         let pageID = $("body")[0].getAttribute("id");
         
       switch (pageID) {
+        case 'edit':
+          displayEdit();
+          break;
         case 'contact':
           displayContact();
-          break;
-          case 'edit':
-          displayEdit();
           break;
         case 'login':
           displayLogin();
           break;
         case 'register':
-          displayRegister()
+          displayRegister();
           break;
         case 'contact-list':
           displayContactList();

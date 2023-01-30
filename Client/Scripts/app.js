@@ -80,11 +80,11 @@ var core;
     function Start() {
         let pageID = $("body")[0].getAttribute("id");
         switch (pageID) {
-            case 'contact':
-                displayContact();
-                break;
             case 'edit':
                 displayEdit();
+                break;
+            case 'contact':
+                displayContact();
                 break;
             case 'login':
                 displayLogin();

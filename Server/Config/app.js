@@ -42,13 +42,13 @@ const index_1 = __importDefault(require("../Routes/index"));
 const app = (0, express_1.default)();
 exports.default = app;
 const DBConfig = __importStar(require("./db"));
-mongoose_1.default.connect(DBConfig.URI);
+mongoose_1.default.connect(DBConfig.URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose_1.default.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log(`Connected to MongoDB at: ${DBConfig.URI}`);
 });
-app.set('views', path_1.default.join(__dirname, '../Views'));
+app.set('views', path_1.default.join(__dirname, '../Views/'));
 app.set('view engine', 'ejs');
 app.use((0, morgan_1.default)('dev'));
 app.use(express_1.default.json());

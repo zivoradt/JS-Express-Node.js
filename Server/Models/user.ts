@@ -1,28 +1,39 @@
-import mongoose from "mongoose";
+import mongoose, { PassportLocalSchema } from 'mongoose';
 const Schema = mongoose.Schema;
-import passportLocalMongoose from "passport-local-mongoose";
+import passportLocalMongoose from 'passport-local-mongoose';
 
-const UserChema = new Schema({
+const UserSchema = new Schema
+({
     username: String,
-    EmailAddress: String,
-    DisplayName: String,
+    emailAddress: String,
+    displayName: String,
     created:
     {
         type: Date,
         default: Date.now()
-
     },
-    updated: 
+    updated:
     {
         type: Date,
         default: Date.now()
     }
-
 },
 {
     collection: 'user'
 });
 
-UserChema.plugin(passportLocalMongoose);
-const Model = mongoose.model("User", UserChema);
+UserSchema.plugin(passportLocalMongoose);
+
+const Model = mongoose.model("User", UserSchema as PassportLocalSchema);
+
+declare global
+{
+    export type UserDocument = mongoose.Document &
+    {
+        username: String,
+        emailAddress: String,
+        displayName: String
+    }
+}
+
 export default Model;

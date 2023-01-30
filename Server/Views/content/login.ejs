@@ -3,11 +3,12 @@
           <div class="login" id="contentArea">
               <h1 class="display-4">Login</h1>
 
-              <% if(messages.length > 0) {%> 
+              <!-- message area -->
+              <% if(messages.length > 0) { %>
               <div id="messageArea" class="alert alert-danger">
-                <%= messages %> 
+                <%= messages %>
               </div>
-              <% } %> 
+              <% } %>
 
               <form id="loginForm" novalidate method="POST">
                 <div class="form-group">

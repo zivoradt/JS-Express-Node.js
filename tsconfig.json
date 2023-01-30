@@ -8,7 +8,6 @@
         "alwaysStrict": true,
         "removeComments": true,
         "moduleResolution": "Node",
-        "esModuleInterop": true,
-        "skipLibCheck": true
+        "esModuleInterop": true
     }
 }

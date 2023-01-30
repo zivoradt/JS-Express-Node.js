@@ -24,7 +24,6 @@ router.get('/contact-list', function (req, res, next) {
         if (err) {
             return console.error(err);
         }
-        console.log(contacts);
         res.render('index', { title: 'Contact List', page: 'contact-list', contacts: contacts, displayName: 'temp' });
     });
 });
@@ -35,27 +34,23 @@ router.get('/edit/:id', function (req, res, next) {
             console.error(err);
             res.end(err);
         }
-        else {
-            res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: '' });
-        }
+        res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: '' });
     });
 });
 router.post('/edit/:id', function (req, res, next) {
     let id = req.params.id;
-    let updateContact = new contact_1.default({
+    let updatedContact = new contact_1.default({
         "_id": id,
         "FullName": req.body.FullName,
         "ContactNumber": req.body.ContactNumber,
-        "EmailAdress": req.body.EmailAdress
+        "EmailAdress": req.body.EmailAddress
     });
-    contact_1.default.updateOne({ _id: id }, updateContact, {}, (err) => {
+    contact_1.default.updateOne({ _id: id }, updatedContact, {}, (err) => {
         if (err) {
             console.error(err);
             res.end(err);
         }
-        else {
-            res.redirect('/contact-list');
-        }
+        res.redirect('/contact-list');
     });
 });
 router.get('/add', function (req, res, next) {
@@ -65,7 +60,7 @@ router.post('/add', function (req, res, next) {
     let newContact = new contact_1.default({
         "FullName": req.body.FullName,
         "ContactNumber": req.body.ContactNumber,
-        "EmailAdress": req.body.EmailAdress
+        "EmailAdress": req.body.EmailAddress
     });
     contact_1.default.create(newContact, (err) => {
         if (err) {

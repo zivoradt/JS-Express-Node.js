@@ -6,27 +6,26 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 
-// modules for autentification
+// modules for authentication
 import session from 'express-session';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 
-// autentification objects
-let localStrategy = passportLocal.Strategy;
+// authentication objects
+let localStrategy = passportLocal.Strategy; // alias
 import User from '../Models/user';
 
-// module for autentification messaging and error managemnet
+// module for auth messaging and error management
 import flash from 'connect-flash';
-
 
 // App configuration
 import indexRouter from '../Routes/index';
 const app = express();
 export default app;
- 
+
 // DB configuration
 import * as DBConfig from './db';
-mongoose.connect(DBConfig.URI);
+mongoose.connect(DBConfig.URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -34,9 +33,8 @@ db.once('open', function() {
   console.log(`Connected to MongoDB at: ${DBConfig.URI}`);
 });
 
-
 // view engine setup
-app.set('views', path.join(__dirname, '../Views'));
+app.set('views', path.join(__dirname, '../Views/'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
@@ -53,23 +51,21 @@ app.use(session({
   resave: false
 }));
 
-//initialize flash
+// initialize flash
 app.use(flash());
 
 // initialize passport
 app.use(passport.initialize());
-
-//cookie base autentification
 app.use(passport.session());
 
-// implement an autentification strategy
+// implement an Auth Strategy
 passport.use(User.createStrategy());
 
-//serialize and deserialize user data
+// serialize and deserialize user data
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Route config
+// route configuration
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

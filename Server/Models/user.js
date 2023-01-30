@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Schema = mongoose_1.default.Schema;
 const passport_local_mongoose_1 = __importDefault(require("passport-local-mongoose"));
-const UserChema = new Schema({
+const UserSchema = new Schema({
     username: String,
-    EmailAddress: String,
-    DisplayName: String,
+    emailAddress: String,
+    displayName: String,
     created: {
         type: Date,
         default: Date.now()
@@ -21,7 +21,7 @@ const UserChema = new Schema({
 }, {
     collection: 'user'
 });
-UserChema.plugin(passport_local_mongoose_1.default);
-const Model = mongoose_1.default.model("User", UserChema);
+UserSchema.plugin(passport_local_mongoose_1.default);
+const Model = mongoose_1.default.model("User", UserSchema);
 exports.default = Model;
 //# sourceMappingURL=user.js.map
