@@ -7,10 +7,11 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 exports.default = router;
 const contact_list_1 = require("../Controllers/contact-list");
-router.get('/', contact_list_1.DisplayContatListPage);
-router.get('/edit/:id', contact_list_1.DisplayEditPage);
-router.post('/edit/:id', contact_list_1.ProcessEditPage);
-router.get('/add', contact_list_1.DisplayAddPage);
-router.post('/add', contact_list_1.ProcessAddPage);
-router.get('/delete/:id', contact_list_1.ProcessDeletePage);
+const index_1 = require("../Util/index");
+router.get('/', index_1.AuthGard, contact_list_1.DisplayContatListPage);
+router.get('/edit/:id', index_1.AuthGard, contact_list_1.DisplayEditPage);
+router.post('/edit/:id', index_1.AuthGard, contact_list_1.ProcessEditPage);
+router.get('/add', index_1.AuthGard, contact_list_1.DisplayAddPage);
+router.post('/add', index_1.AuthGard, contact_list_1.ProcessAddPage);
+router.get('/delete/:id', index_1.AuthGard, contact_list_1.ProcessDeletePage);
 //# sourceMappingURL=contact-list.js.map

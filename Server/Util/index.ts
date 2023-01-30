@@ -9,3 +9,11 @@ export function UserDisplayName(req: Request): string
     }
     return '';
 }
+
+export function AuthGard(req:Request, res:Response, next:NextFunction):void
+{
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login');
+    }
+    next();
+}
