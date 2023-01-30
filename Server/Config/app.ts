@@ -20,6 +20,7 @@ import flash from 'connect-flash';
 
 // App configuration
 import indexRouter from '../Routes/index';
+import contactListRouter from '../Routes/contact-list';
 const app = express();
 export default app;
 
@@ -67,6 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // route configuration
 app.use('/', indexRouter);
+app.use('/contact-list', contactListRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
