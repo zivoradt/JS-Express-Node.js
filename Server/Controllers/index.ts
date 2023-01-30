@@ -112,6 +112,7 @@ export function ProcessRegisterPage(req:Request, res:Response, next:NextFunction
     User.register(newUser, req.body.password, (err) => 
     {
         if(err){
+            console.log(err);
             console.error('Error: Inserting New User');
             if(err.name == "UserExistsError")
             {

@@ -79,6 +79,7 @@ function ProcessRegisterPage(req, res, next) {
     });
     user_1.default.register(newUser, req.body.password, (err) => {
         if (err) {
+            console.log(err);
             console.error('Error: Inserting New User');
             if (err.name == "UserExistsError") {
                 req.flash('registerMessage', 'Registration Error');
