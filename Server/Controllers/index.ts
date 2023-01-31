@@ -7,7 +7,7 @@ import User from '../Models/user';
 
 
 // Util Function
-import {UserDisplayName} from '../Util/index';
+import {UserDisplayName, GenerateToken} from '../Util/index';
 
 // Display Page Functions
 export function DisplayHomePage(req:Request, res:Response, next:NextFunction): void
@@ -93,6 +93,9 @@ export function ProcessLoginPage(req:Request, res:Response, next:NextFunction): 
                 console.error(err);
                 return next(err);
             }
+
+            const authToken = GenerateToken(user);
+            console.log(authToken);
 
             return res.redirect('/contact-list');
         });
