@@ -35,6 +35,10 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = __importDefault(require("passport-local"));
+const cors_1 = __importDefault(require("cors"));
+const passport_jwt_1 = __importDefault(require("passport-jwt"));
+let JWStrategy = passport_jwt_1.default.Strategy;
+let ExtractJWS = passport_jwt_1.default.ExtractJwt;
 let localStrategy = passport_local_1.default.Strategy;
 const user_1 = __importDefault(require("../Models/user"));
 const connect_flash_1 = __importDefault(require("connect-flash"));
@@ -57,6 +61,7 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../Client/')));
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../node_modules/')));
+app.use((0, cors_1.default)());
 app.use((0, express_session_1.default)({
     secret: DBConfig.Secret,
     saveUninitialized: false,
@@ -68,6 +73,20 @@ app.use(passport_1.default.session());
 passport_1.default.use(user_1.default.createStrategy());
 passport_1.default.serializeUser(user_1.default.serializeUser());
 passport_1.default.deserializeUser(user_1.default.deserializeUser());
+let jwtOption = {
+    jwtFromRequest: ExtractJWS.fromAuthHeaderAsBearerToken(),
+    secretOrKey: DBConfig.Secret
+};
+let strategy = new JWStrategy(jwtOption, (jwt_payload, done) => {
+    user_1.default.findById(jwt_payload.id)
+        .then(user => {
+        return done(null, user);
+    })
+        .catch(err => {
+        return done(err, false);
+    });
+});
+passport_1.default.use(strategy);
 app.use('/', index_1.default);
 app.use('/contact-list', contact_list_1.default);
 app.use(function (req, res, next) {

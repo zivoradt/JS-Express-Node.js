@@ -11,6 +11,14 @@ import session from 'express-session';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 
+// modules for jwt support
+import cors from 'cors';
+import passportJWT from 'passport-jwt';
+
+// define JWS aliases
+let JWStrategy = passportJWT.Strategy;
+let ExtractJWS = passportJWT.ExtractJwt;
+
 // authentication objects
 let localStrategy = passportLocal.Strategy; // alias
 import User from '../Models/user';
@@ -45,6 +53,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../Client/')));
 app.use(express.static(path.join(__dirname, '../../node_modules/')));
 
+app.use(cors());
+
 // setup express session
 app.use(session({
   secret: DBConfig.Secret,
@@ -65,6 +75,24 @@ passport.use(User.createStrategy());
 // serialize and deserialize user data
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+let jwtOption = 
+{
+  jwtFromRequest: ExtractJWS.fromAuthHeaderAsBearerToken(),
+  secretOrKey: DBConfig.Secret
+}
+
+let strategy = new JWStrategy(jwtOption,(jwt_payload, done)=>{
+    User.findById(jwt_payload.id)
+    .then(user =>{
+      return done(null, user);
+    })
+    .catch(err=>{
+      return done(err, false);
+    })
+});
+
+passport.use(strategy);
 
 // route configuration
 app.use('/', indexRouter );
